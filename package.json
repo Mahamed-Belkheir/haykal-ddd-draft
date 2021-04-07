@@ -18,8 +18,10 @@
   },
   "dependencies": {
     "fastify": "^3.14.1",
+    "pg": "^8.5.1",
     "pino": "^6.11.2",
     "reflect-metadata": "^0.1.13",
-    "tsyringe": "^4.5.0"
+    "tsyringe": "^4.5.0",
+    "typeorm": "^0.2.32"
   }
 }

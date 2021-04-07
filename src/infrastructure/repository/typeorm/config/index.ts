@@ -9,8 +9,10 @@ export default async function() {
         password: "password",
         database: "haykal-draft",
         entities: [
-            __dirname + "../*.js"
+            __dirname + '/../*.js'
         ],
         synchronize: true
     })
 }
+
+export * from "../user"

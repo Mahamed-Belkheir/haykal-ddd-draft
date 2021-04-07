@@ -1,9 +1,13 @@
-import { injectable } from "tsyringe";
+import { inject, injectable } from "tsyringe";
 import { IUserRepository } from "../../interface/repository/user";
 
 @injectable()
 export class User {
     constructor(
-        private userRepo: IUserRepository
+        @inject("UserRepository") private userRepo: IUserRepository
     ) {}
+
+    public fetchAllUsers() {
+        return this.userRepo.fetch();
+    }
 }

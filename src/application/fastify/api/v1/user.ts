@@ -1,8 +1,12 @@
 import { FastifyPluginAsync } from "fastify"
+import { container } from "tsyringe";
+import { User } from "../../../../domain/entity/user";
 
 const router: FastifyPluginAsync = async function (fastify, _) {
-    fastify.get('/hello', async (_, res) => {
-        res.send("world");
+    const user = container.resolve(User);
+    fastify.get('/users', async (_, res) => {
+        let users = await user.fetchAllUsers();
+        res.send(users);
     })
 }
 

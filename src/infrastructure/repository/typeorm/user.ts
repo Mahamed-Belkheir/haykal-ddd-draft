@@ -1,9 +1,9 @@
-import { Column, Entity, getRepository, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, Column, Entity, getRepository, PrimaryGeneratedColumn, Repository } from "typeorm";
 import { UserDTO } from "../../../interface/dto/user";
 import { IUserRepository } from "../../../interface/repository/user";
 
 @Entity()
-export class User implements UserDTO {
+export class User extends BaseEntity implements UserDTO {
     @PrimaryGeneratedColumn()
     id: number
 
@@ -15,7 +15,11 @@ export class User implements UserDTO {
 }
 
 export class UserRepository implements IUserRepository {
-    private repo = getRepository(User); 
+    private repo:Repository<User>;
+    
+    constructor() {
+        this.repo = getRepository(User);
+    }
 
     fetch(query?: Partial<UserDTO>) {
         return this.repo.find(query);

@@ -10,4 +10,8 @@ export class User {
     public fetchAllUsers() {
         return this.userRepo.fetch();
     }
+
+    public signup() {
+        
+    }
 }

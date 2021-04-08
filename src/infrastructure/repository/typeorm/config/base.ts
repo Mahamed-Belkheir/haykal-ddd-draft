@@ -1,5 +1,7 @@
+import { inject } from "tsyringe";
 import { Repository } from "typeorm";
-import { IBaseRepository } from "../../../../interface/repository/baseInterface";
+import { IBaseAuthenticable, IBaseRepository } from "../../../../interface/repository/baseInterface";
+import { IHashService } from "../../../../interface/service/hash";
 
 export abstract class BaseRepository<DTO extends {[index: string]: any}> implements IBaseRepository<DTO> {
     protected repo:Repository<DTO>;
@@ -20,11 +22,39 @@ export abstract class BaseRepository<DTO extends {[index: string]: any}> impleme
         await this.repo.insert(data);
     } 
 
-    async storeAndFetch(data: DTO) {
+    storeAndFetch(data: DTO) {
         return this.repo.save(this.repo.create(data));
     }
 
     async update(data: Partial<DTO>, query: Partial<DTO>) {
         await this.repo.update(query, data);
     }
+}
+
+export abstract class BaseAuthenticable<DTO extends { [index: string]: any, password: string }> extends BaseRepository<DTO> implements IBaseAuthenticable<DTO> {
+    constructor(
+        @inject("HashService") private hash: IHashService
+    ) {
+        super();
+    }
+
+    async store(data: DTO) {
+        data.password = await this.hash.hash(data.password);
+        await this.repo.insert(data);
+    } 
+
+    async storeAndFetch(data: DTO) {
+        data.password = await this.hash.hash(data.password);
+        return this.repo.save(this.repo.create(data));
+    }
+
+    async update(data: Partial<DTO>, query: Partial<DTO>) {
+        if (data.password)
+            data.password = await this.hash.hash(data.password);
+        await this.repo.update(query, data);
+    }
+
+    async compare(str: string, hash: string) {
+        return this.hash.compare(str, hash); 
+    };
 }

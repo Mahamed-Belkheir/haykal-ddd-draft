@@ -6,3 +6,7 @@ export interface IBaseRepository<DTO> {
     update(data: Partial<DTO>, query: Partial<DTO>): Promise<void>
     delete(query?: Partial<DTO>): Promise<void>
 }
+
+export interface IBaseAuthenticable<DTO> extends IBaseRepository<DTO> {
+    compare(password: string, hash: string): Promise<boolean>
+}

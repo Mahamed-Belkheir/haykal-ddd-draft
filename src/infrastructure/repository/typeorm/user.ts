@@ -1,7 +1,7 @@
 import { BaseEntity, Column, Entity, getRepository, PrimaryGeneratedColumn } from "typeorm";
 import { UserDTO } from "../../../interface/dto/user";
 import { IUserRepository } from "../../../interface/repository/user";
-import { BaseRepository } from "./config/base";
+import { BaseAuthenticable } from "./config/base";
 
 @Entity()
 export class User extends BaseEntity implements UserDTO {
@@ -15,6 +15,6 @@ export class User extends BaseEntity implements UserDTO {
     password: string
 }
 
-export class UserRepository extends BaseRepository<UserDTO> implements IUserRepository {
+export class UserRepository extends BaseAuthenticable<UserDTO> implements IUserRepository {
     repo = getRepository(User);
 }

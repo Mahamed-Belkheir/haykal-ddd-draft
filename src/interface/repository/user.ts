@@ -1,6 +1,6 @@
 import { UserDTO } from "../dto/user";
-import { IBaseRepository } from "./baseInterface";
+import { IBaseAuthenticable } from "./baseInterface";
 
-export interface IUserRepository extends IBaseRepository<UserDTO> {
+export interface IUserRepository extends IBaseAuthenticable<UserDTO> {
 
 }

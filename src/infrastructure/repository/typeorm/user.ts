@@ -1,10 +1,10 @@
-import { BaseEntity, Column, Entity, getRepository, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, getRepository, PrimaryGeneratedColumn } from "typeorm";
 import { UserDTO } from "../../../interface/dto/user";
 import { IUserRepository } from "../../../interface/repository/user";
 import { BaseAuthenticable } from "./config/base";
 
 @Entity()
-export class User extends BaseEntity implements UserDTO {
+export class User implements UserDTO {
     @PrimaryGeneratedColumn()
     id: number
 
